@@ -1,10 +1,3 @@
-// Daniel Shiffman
-// Nature of Code: Intelligence and Learning
-// https://github.com/shiffman/NOC-S17-2-Intelligence-Learning
-
-// This flappy bird implementation is adapted from:
-// https://youtu.be/cXgA1d_E-jY&
-
 class Pipe {
   constructor() {
 
@@ -12,6 +5,13 @@ class Pipe {
     let spacing = 100;
     // Where is th center of the empty space
     let centery = random(spacing, height - spacing);
+
+    //load the North and South pipes 
+    this.pipeN = new Image(); 
+    this.pipeS = new Image(); 
+
+    this.pipeN.src = "img/pipetop.png"; 
+    this.pipeS.src = "img/pipebottom.png"; 
 
     // Top and bottom of pipe
     this.top = centery - spacing / 2;
@@ -36,10 +36,8 @@ class Pipe {
 
   // Draw the pipe
   show() {
-    stroke(255);
-    fill(200);
-    rect(this.x, 0, this.w, this.top);
-    rect(this.x, height - this.bottom, this.w, this.bottom);
+    ctx.drawImage(this.pipeN, this.x, 0, this.w, this.top); 
+    ctx.drawImage(this.pipeS, this.x, height - this.bottom, this.w, this.bottom); 
   }
 
   // Update the pipe

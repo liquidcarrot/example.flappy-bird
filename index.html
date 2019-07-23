@@ -1,14 +1,9 @@
+<!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="UTF-8">
-  <script src="https://liquidcarrot.io/carrot/cdn/0.2.20/carrot.js"></script>
-  <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
-  <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
-   <script language="javascript" type="text/javascript" src="main.js"></script>
-  <script language="javascript" type="text/javascript" src="ga.js"></script>
-  <script language="javascript" type="text/javascript" src="bird.js"></script>
-  <script language="javascript" type="text/javascript" src="Pipe.js"></script>
+  
   <style> 
 		.carrot
 		{
@@ -59,14 +54,21 @@
 		
 	</style>
 </head>
-
-<body>
-    <img src="img/liquid.jpg" alt = "carrot logo" height = "70" width = "380" class = "carrot"/>
-    
-	<br/> <br/> <br/> <br/> <br/><div id="canvascontainer" width="500" height="512"   > </div>
-  <p>
-    
-     
+<body>   
+  
+	<br/> <br/> <br/> <br/> <br/>
+	<img src="img/liquid.jpg" alt = "carrot logo" height = "70" width = "380" class = "carrot"/>
+	<canvas id="canvas" width="450" height="512"   > </canvas>
+	<script src = "https://liquidcarrot.io/carrot/cdn/0.3.0/carrot.js"></script>
+	<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+	<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
+	<script language="javascript" type="text/javascript" src="main.js"></script>
+	<script language="javascript" type="text/javascript" src="ga.js"></script>
+	<script language="javascript" type="text/javascript" src="bird.js"></script>
+	<script language="javascript" type="text/javascript" src="Pipe.js"></script>
+   
+	<p>
+	  
 	  speed: <input id="speedSlider" type="range" min="1" max="10" value="1" > 
       <span id="speed"  class="rightnum">1</span>
     <br/> high score: <span id="hs"  >0</span>

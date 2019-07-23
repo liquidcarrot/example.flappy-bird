@@ -1,9 +1,5 @@
-// Daniel Shiffman
-// Nature of Code: Intelligence and Learning
-// https://github.com/shiffman/NOC-S18
-
-// This flappy bird implementation is adapted from:
-// https://youtu.be/cXgA1d_E-jY&
+var cvs = document.getElementById('canvas'); 
+var ctx = cvs.getContext('2d');
 
 // How big is the population
 let totalPopulation = 50;
@@ -28,11 +24,17 @@ let highScore = 0;
 // Training or just showing the current best
 let runBest = false;
 let runBestButton;
+ 
+//Load the background image
+ bg = new Image(); 
+ bg.src = "img/background.png";
 
 function setup() {
-  let canvas = createCanvas(600, 400);
-  canvas.parent('canvascontainer');
+  
+  let canvas = createCanvas(450, 512);
+  canvas.parent('canvas');
 
+ 
   // Access the interface elements
   speedSlider = select('#speedSlider');
   speedSpan = select('#speed');
@@ -65,7 +67,7 @@ function toggleState() {
 
 
 function draw() {
-  background(0);
+  ctx.drawImage(bg, 0, 0, 450, 512);
 
   // Should we speed up cycles per frame
   let cycles = speedSlider.value();
@@ -165,10 +167,12 @@ function draw() {
   }
 
   if (runBest) {
-    bestBird.show();
+    //bestBird.show();
+    bestBird.draw();
   } else {
     for (let i = 0; i < activeBirds.length; i++) {
-      activeBirds[i].show();
+      //activeBirds[i].show();
+      activeBirds[i].draw();
     }
     // If we're out of birds go to the next generation
     if (activeBirds.length == 0) {

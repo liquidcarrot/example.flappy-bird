@@ -1,6 +1,4 @@
-
 let { Network, architect } = carrot; 
-
 
 class Bird {
   constructor(brain) {
@@ -9,6 +7,8 @@ class Bird {
     this.y = height / 2;
     this.r = 12;
 
+    this.birdImage = new Image(); 
+    this.birdImage.src = "img/bird.png";
     // Gravity, lift and velocity
     this.gravity = 0.8;
     this.lift = -12;
@@ -36,12 +36,9 @@ class Bird {
     return new Bird(this.brain);
   }
 
-  // Display the bird
-  show() {
-    fill(255, 100);
-    stroke(255);
-    ellipse(this.x, this.y, this.r * 2, this.r * 2);
-  }
+   draw() {
+      ctx.drawImage(this.birdImage,  this.x, this.y, this.r * 2, this.r * 2); 
+   }
 
   // This is the key function now that decides
   // if it should jump or not jump!

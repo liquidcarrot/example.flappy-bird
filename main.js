@@ -31,7 +31,7 @@ let runBestButton;
 
 function setup() {
   
-  let canvas = createCanvas(450, 512);
+  let canvas = createCanvas(600, 480);
   canvas.parent('canvas');
 
  
@@ -67,7 +67,7 @@ function toggleState() {
 
 
 function draw() {
-  ctx.drawImage(bg, 0, 0, 450, 512);
+  ctx.drawImage(bg, 0, 0, 350, 412);
 
   // Should we speed up cycles per frame
   let cycles = speedSlider.value();

@@ -2,7 +2,7 @@ class Pipe {
   constructor() {
 
     // How big is the empty space
-    let spacing = 100;
+    let spacing = 120;
     // Where is th center of the empty space
     let centery = random(spacing, height - spacing);
 

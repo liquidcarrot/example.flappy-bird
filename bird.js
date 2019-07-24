@@ -1,47 +1,38 @@
-//let { Network, Neat, architect } = carrot; 
+//let { Network, Neat, architect } = carrot;
 
-class Bird {
-  constructor(brain) {
-    // position and size of bird
-    this.x = 64;
-    this.y = height / 2;
-    this.r = 12;
-    this.brain = brain; 
-    this.birdImage = new Image(); 
-    this.birdImage.src = "img/bird.png";
-    // Gravity, lift and velocity
-    this.gravity = 0.8;
-    this.lift = -12;
-    this.velocity = 0;
-  // Score is how many frames it's been alive
-   this.score = 0;
-    // Fitness is normalized version of score
-   this.fitness = 0;
-  }
+
+let Bird = function(brain) {
   
-    // Is this a copy of another Bird or a new one?
-    // The Neural Network is the bird's "brain"
-   /* if (brain instanceof Neat) {
-      brain.clear();
-      this.brain = new Neat(brain.input, brain.output);
-      this.brain.mutate(0.1);
-
-    } else {
-      this.brain = new Network(5, 8, 2);
-    }*/
+  console.log(brain)
+  
+  // position and size of bird
+  this.x = 64;
+  this.y = height / 2;
+  this.r = 12;
+  this.brain = brain;
+  this.birdImage = new Image();
+  this.birdImage.src = "img/bird.png";
+  // Gravity, lift and velocity
+  this.gravity = 0.8;
+  this.lift = -12;
+  this.velocity = 0;
+  // Score is how many frames it's been alive
+  this.score = 0;
+  // Fitness is normalized version of score
+  this.fitness = 0;
   
   // Create a copy of this bird
-  copys() {
+  this.copys = function(){
     return new Bird(this.brain);
   }
 
-   draw() {
-      ctx.drawImage(this.birdImage,  this.x, this.y, this.r * 2, this.r * 2); 
+  this.draw = function(){
+      ctx.drawImage(this.birdImage,  this.x, this.y, this.r * 2, this.r * 2);
    }
 
   // This is the key function now that decides
   // if it should jump or not jump!
-  think(pipes) {
+  this.think = function(ipes) {
     // First find the closest pipe
     let closest = null;
     let record = Infinity;
@@ -82,17 +73,17 @@ class Bird {
   }
 
   // Jump up
-  up() {
+  this.up = function(){
     this.velocity += this.lift;
   }
 
-  bottomTop() {
+  this.bottomTop = function(){
     // Bird dies when hits bottom?
     return (this.y > height || this.y < 0);
   }
 
   // Update bird's position based on velocity, gravity, etc.
-  update() {
+  this.update = function(){
     this.velocity += this.gravity;
     // this.velocity *= 0.9;
     this.y += this.velocity;
@@ -101,7 +92,9 @@ class Bird {
     this.score++;
   }
 
-  getScore() {
-    return this.score; 
+  this.getScore = function(){
+    return this.score;
   }
+  
+  return this;
 }

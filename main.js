@@ -1,28 +1,45 @@
-let { Neat, Network, architect, methods } = carrot; 
+let { Neat, Network, architect, methods } = carrot;
 
-var cvs = document.getElementById('canvas'); 
+var cvs = document.getElementById('canvas');
 var ctx = cvs.getContext('2d');
 
-const POP = 50; 
+const POP = 50;
 const GAMES = 60;
 const mutation_rate = 0.5;
 const mutation_amount = 3;
 const elitism = Math.round(0.2 * GAMES);
 
 const neat = new Neat(5, 2, {
-  population_size: POP, 
+  population_size: POP,
   elitism: elitism,
-  mutation_rate: mutation_rate, 
-  mutation_amount: mutation_amount, 
+  mutation_rate: mutation_rate,
+  mutation_amount: mutation_amount,
   equal: false
 })
+
+neat.population = neat.population.map(function(genome) {
+    
+  // grab a random mutation method
+  const random_mutation_method = methods.mutation.FFW[Math.floor(Math.random() * methods.mutation.FFW.length)]
+  
+  console.log(genome)
+  
+  // mutate the genome
+  genome.mutate(random_mutation_method)
+  
+  console.log(genome)
+  
+  // return the mutated genome
+  return genome
+})
+
+console.log(neat.population)
 
 
 // How big is the population
 //let totalPopulation = 50;
 // All active birds (not yet collided with pipe)
-let activeBirds = neat.population;
-console.log(activeBirds); 
+let activeBirds = []
 // All birds for any given population
 let currentGeneration = [];
 // Pipes
@@ -44,7 +61,7 @@ let runBest = false;
 let runBestButton;
  
 //Load the background image
- bg = new Image(); 
+ bg = new Image();
  bg.src = "img/background.png";
 
 function setup() {
@@ -60,25 +77,12 @@ function setup() {
   allTimeHighScoreSpan = select('#ahs');
   runBestButton = select('#best');
   runBestButton.mousePressed(toggleState);
-
+  
   // Create a population
-  for (let i = 0; i < neat.population_size; i++) {
-    const bird = new Bird(neat.population[i]);
-    activeBirds[i] = bird;
-    
+  for (let i = 0; i < neat.population.length; i++) {
+    activeBirds.push(new Bird(neat.population[i]));
   }
-    activeBirds = activeBirds.map(function(bird) {
-      
-    // grab a random mutation method
-    const current = methods.mutation.FFW[Math.floor(Math.random() * methods.mutation.FFW.length)]
-    
-    
-    // mutate the genome
-    bird.brain.mutate(current);
-    
-    // return the mutated genome
-    return bird
-  })
+  console.log(activeBirds)
 }
 
 // Toggle the state of the simulation

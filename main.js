@@ -1,12 +1,30 @@
+let { Neat, Network, architect, methods } = carrot; 
+
 var cvs = document.getElementById('canvas'); 
 var ctx = cvs.getContext('2d');
 
+const POP = 50; 
+const GAMES = 60;
+const mutation_rate = 0.5;
+const mutation_amount = 3;
+const elitism = Math.round(0.2 * GAMES);
+
+const neat = new Neat(5, 2, {
+  population_size: POP, 
+  elitism: elitism,
+  mutation_rate: mutation_rate, 
+  mutation_amount: mutation_amount, 
+  equal: false
+})
+
+
 // How big is the population
-let totalPopulation = 50;
+//let totalPopulation = 50;
 // All active birds (not yet collided with pipe)
-let activeBirds = [];
+let activeBirds = neat.population;
+console.log(activeBirds); 
 // All birds for any given population
-let allBirds = [];
+let currentGeneration = [];
 // Pipes
 let pipes = [];
 // A frame counter to determine when to add a pipe
@@ -44,11 +62,23 @@ function setup() {
   runBestButton.mousePressed(toggleState);
 
   // Create a population
-  for (let i = 0; i < totalPopulation; i++) {
-    let bird = new Bird();
+  for (let i = 0; i < neat.population_size; i++) {
+    const bird = new Bird(neat.population[i]);
     activeBirds[i] = bird;
-    allBirds[i] = bird;
+    
   }
+    activeBirds = activeBirds.map(function(bird) {
+      
+    // grab a random mutation method
+    const current = methods.mutation.FFW[Math.floor(Math.random() * methods.mutation.FFW.length)]
+    
+    
+    // mutate the genome
+    bird.brain.mutate(current);
+    
+    // return the mutated genome
+    return bird
+  })
 }
 
 // Toggle the state of the simulation
@@ -56,11 +86,11 @@ function toggleState() {
   runBest = !runBest;
   // Show the best bird
   if (runBest) {
-    resetGame();
+    //resetGame();
     runBestButton.html('continue training');
     // Go train some more
   } else {
-    nextGeneration();
+    //nextGeneration();
     runBestButton.html('run best');
   }
 }
@@ -84,34 +114,26 @@ function draw() {
       }
     }
     // Are we just running the best bird
-    if (runBest) {
-      bestBird.think(pipes);
-      bestBird.update();
-      for (let j = 0; j < pipes.length; j++) {
-        // Start over, bird hit pipe
-        if (pipes[j].hits(bestBird)) {
-          resetGame();
-          break;
-        }
-      }
-
-      if (bestBird.bottomTop()) {
-        resetGame();
-      }
+    
       // Or are we running all the active birds
-    } else {
+     
+
       for (let i = activeBirds.length - 1; i >= 0; i--) {
         let bird = activeBirds[i];
         // Bird uses its brain!
         bird.think(pipes);
         bird.update();
-
+       
+      
+          
+      
         // Check all the pipes
         for (let j = 0; j < pipes.length; j++) {
           // It's hit a pipe
           if (pipes[j].hits(activeBirds[i])) {
             // Remove this bird
-            activeBirds.splice(i, 1);
+             activeBirds[i].brain.score = activeBirds[i].getScore();
+             currentGeneration.push(activeBirds.splice(i, 1).brain);
             break;
           }
         }
@@ -121,7 +143,7 @@ function draw() {
         }
 
       }
-    }
+    
 
     // Add a new pipe every so often
     if (counter % 75 == 0) {
@@ -176,7 +198,7 @@ function draw() {
     }
     // If we're out of birds go to the next generation
     if (activeBirds.length == 0) {
-      nextGeneration();
+     // nextGeneration();
     }
   }
 }

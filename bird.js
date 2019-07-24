@@ -1,4 +1,4 @@
-let { Network, architect } = carrot; 
+//let { Network, Neat, architect } = carrot; 
 
 class Bird {
   constructor(brain) {
@@ -6,31 +6,30 @@ class Bird {
     this.x = 64;
     this.y = height / 2;
     this.r = 12;
-
+    this.brain = brain; 
     this.birdImage = new Image(); 
     this.birdImage.src = "img/bird.png";
     // Gravity, lift and velocity
     this.gravity = 0.8;
     this.lift = -12;
     this.velocity = 0;
-
+  // Score is how many frames it's been alive
+   this.score = 0;
+    // Fitness is normalized version of score
+   this.fitness = 0;
+  }
+  
     // Is this a copy of another Bird or a new one?
     // The Neural Network is the bird's "brain"
-    if (brain instanceof Network) {
+   /* if (brain instanceof Neat) {
       brain.clear();
-      this.brain = new Network(brain.input, brain.output);
+      this.brain = new Neat(brain.input, brain.output);
       this.brain.mutate(0.1);
 
     } else {
       this.brain = new Network(5, 8, 2);
-    }
-
-    // Score is how many frames it's been alive
-    this.score = 0;
-    // Fitness is normalized version of score
-    this.fitness = 0;
-  }
-
+    }*/
+  
   // Create a copy of this bird
   copys() {
     return new Bird(this.brain);
@@ -46,6 +45,7 @@ class Bird {
     // First find the closest pipe
     let closest = null;
     let record = Infinity;
+    
     for (let i = 0; i < pipes.length; i++) {
       let diff = pipes[i].x - this.x;
       if (diff > 0 && diff < record) {
@@ -53,6 +53,8 @@ class Bird {
         closest = pipes[i];
       }
     }
+
+    console.log(this.x + ' , ' + this.y)
 
     if (closest != null) {
       // Now create the inputs to the neural network
@@ -68,10 +70,12 @@ class Bird {
       // bird's y velocity
       inputs[4] = map(this.velocity, -5, 5, 0, 1);
 
+      
       // Get the outputs from the network
       let action = this.brain.activate(inputs);
       // Decide to jump or not!
       if (action[1] > action[0]) {
+
         this.up();
       }
     }
@@ -95,5 +99,9 @@ class Bird {
 
     // Every frame it is alive increases the score
     this.score++;
+  }
+
+  getScore() {
+    return this.score; 
   }
 }

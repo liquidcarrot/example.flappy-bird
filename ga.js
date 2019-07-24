@@ -2,7 +2,7 @@
 // of birds.
 
 // Start the game over
-function resetGame() {
+/*function resetGame() {
     counter = 0;
     // Resetting best bird score to 0
     if (bestBird) {
@@ -76,4 +76,4 @@ function resetGame() {
     // Make sure it's a copy!
     // (this includes mutation)
     return birds[index].copys();
-  }
+  }*/

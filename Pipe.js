@@ -1,4 +1,4 @@
-class Pipe {
+class pipe {
   constructor() {
 
     // How big is the empty space

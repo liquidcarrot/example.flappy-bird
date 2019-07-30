@@ -49,7 +49,7 @@ let runBestButton;
 
   function setup() {
   
-  let canvas = createCanvas(450, 512);
+  let canvas = createCanvas(600, 480);
   canvas.parent('canvas');
 
   // Access the interface elements
@@ -92,7 +92,7 @@ function populating() {
 
 
 function draw() {
-  ctx.drawImage(bg, 0, 0, 450, 512);
+  ctx.drawImage(bg, 0, 0, 350, 412);
 
   // Should we speed up cycles per frame
   let cycles = speedSlider.value();
@@ -139,7 +139,7 @@ function draw() {
 
     // Add a new pipe every so often
     if (counter % 75 == 0) {
-      pipes.push(new Pipe());
+      pipes.push(new pipe());
     }
     counter++;
   }

@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   
-  <style> 
+  <style>
 		.carrot
 		{
 			position: absolute;
-			top: 10px; 
+			top: 10px;
 			left: 60px;
 		}
 		.cvs
@@ -19,31 +19,31 @@
 		.flap
 		{
 			position: relative;
-			bottom: -75px; 
+			bottom: -75px;
 		}
 		.slider
 		{
 			position: relative;
 			left: 0px;
-			bottom: -20px; 
+			bottom: -20px;
 		}
     .rightnum
 		{
 			position: relative;
 			left: 0px;
-			bottom: 5px; 
+			bottom: 5px;
 		}
     .high
 		{
 			position: relative;
 			left: 0px;
-			bottom: -30px; 
+			bottom: -30px;
 		}
     .all
 		{
 			position: relative;
 			left: 0px;
-			bottom: -30px; 
+			bottom: -30px;
 		}
 		.alltext
 		{
@@ -54,17 +54,19 @@
 		{
 			position: relative;
 			left: 0px;
-			bottom: -30px; 
+			bottom: -30px;
 		}
 		
 	</style>
 </head>
-<body>   
+<body>
   
 	<br/> <br/> <br/> <br/> <br/>
 	<img src="img/liquid.jpg" alt = "carrot logo" height = "70" width = "380" class = "carrot"/>
-	<canvas id="canvas" width="350" height="412" class = "cvs"  > </canvas>
-	<script src = "https://liquidcarrot.io/carrot/cdn/0.3.0/carrot.js"></script>
+
+	<canvas id="canvas" width="450" height="512"   > </canvas>
+	<script src="https://liquidcarrot.io/carrot/cdn/0.1.99/carrot.js"></script>
+
 	<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
 	<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
 	<script language="javascript" type="text/javascript" src="main.js"></script>
@@ -74,7 +76,7 @@
    
 	<p>
 	  
-	  speed: <input id="speedSlider" type="range" min="1" max="10" value="1" > 
+	  speed: <input id="speedSlider" type="range" min="1" max="10" value="1" >
       <span id="speed"  class="rightnum">1</span>
     <br/> high score: <span id="hs"  >0</span>
     <br/>   </span> all time high score: <span id="ahs"  >0</span>

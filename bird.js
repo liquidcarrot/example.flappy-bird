@@ -3,7 +3,7 @@
 
 let Bird = function(brain) {
   
-  console.log(brain)
+ // console.log(brain)
   
   // position and size of bird
   this.x = 64;
@@ -45,7 +45,7 @@ let Bird = function(brain) {
       }
     }
 
-    console.log(this.x + ' , ' + this.y)
+    //console.log(this.x + ' , ' + this.y)
 
     if (closest != null) {
       // Now create the inputs to the neural network

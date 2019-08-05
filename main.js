@@ -4,7 +4,7 @@ var cvs = document.getElementById('canvas');
 var ctx = cvs.getContext('2d');
 
 var POP = 50;
-var GAMES = 70; 
+var GAMES = 70; //70
 var mutation_rate = 1.5; 
 var mutation_amount = 8.0; 
 var elitism = Math.round(0.2 * GAMES);

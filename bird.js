@@ -1,10 +1,4 @@
-//let { Network, Neat, architect } = carrot;
-
-
 let Bird = function(brain) {
-  
- // console.log(brain)
-  
   // position and size of bird
   this.x = 64;
   this.y = height / 2;
@@ -45,8 +39,6 @@ let Bird = function(brain) {
       }
     }
 
-    //console.log(this.x + ' , ' + this.y)
-
     if (closest != null) {
       // Now create the inputs to the neural network
       let inputs = [];
@@ -61,7 +53,6 @@ let Bird = function(brain) {
       // bird's y velocity
       inputs[4] = map(this.velocity, -5, 5, 0, 1);
 
-      
       // Get the outputs from the network
       let action = this.brain.activate(inputs);
       // Decide to jump or not!
@@ -85,16 +76,12 @@ let Bird = function(brain) {
   // Update bird's position based on velocity, gravity, etc.
   this.update = function(){
     this.velocity += this.gravity;
-    // this.velocity *= 0.9;
     this.y += this.velocity;
-
     // Every frame it is alive increases the score
     this.score++;
   }
-
   this.getScore = function(){
     return this.score;
   }
-  
   return this;
 }

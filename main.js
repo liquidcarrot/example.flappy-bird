@@ -4,9 +4,9 @@ var cvs = document.getElementById('canvas');
 var ctx = cvs.getContext('2d');
 
 var POP = 50;
-var GAMES = 70; //70
+var GAMES = 70; 
 var mutation_rate = 1.5; 
-var mutation_amount = 8.0; 
+var mutation_amount = 8.5; 
 var elitism = Math.round(0.2 * GAMES);
 var countGen = 0; 
 
@@ -171,9 +171,9 @@ function draw() {
   }
   this.ctx.fillStyle = "white";
 	this.ctx.font="20px Oswald, sans-serif";
-  //this.ctx.fillText("Score: " + tempHighScore, 10, 25);
-  this.ctx.fillText("Population: " + activeBirds.length, 10, 25 );
-  this.ctx.fillText("Generation: " + countGen, 10,50)
+  
+  this.ctx.fillText("Generation: " + countGen, 10,25)
+  this.ctx.fillText("Population: " + activeBirds.length + "/" + POP, 10, 50 );
   this.ctx.fillText("High Score: " + highScore, 10, 75);
   
 }

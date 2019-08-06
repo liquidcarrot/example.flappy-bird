@@ -67,8 +67,8 @@ for (let i = 0; i < neat.population.length; i++) {
   }
 ```
 
-Thanks to the Coding Train for the structure of the flappy bird game, the original version of the repo: https://github.com/CodingTrain/Toy-Neural-Network-JS 
+Thanks to the **Coding Train** for the structure of the flappy bird game, the original version of the repo: https://github.com/CodingTrain/Toy-Neural-Network-JS 
 
-Thanks to xviniette for inspiration of the machine learning flappy bird demo in js, famous FlappyLearning repo: https://github.com/xviniette/FlappyLearning 
+Thanks to **xviniette** for inspiration of the machine learning flappy bird demo in js, famous FlappyLearning repo: https://github.com/xviniette/FlappyLearning 
 
 

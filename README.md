@@ -1,6 +1,6 @@
 # example.flappy-bird 
 
-Click ([here]( https://akashsamlal.github.io/FlappyBird-NeuroEvolution/)) to play the Demo
+**Click ([here]( https://akashsamlal.github.io/FlappyBird-NeuroEvolution/)) to play the Demo**
 
 Using Machine Learning to play Flappy Bird, use NEAT algorithm from Carrot.js 
 

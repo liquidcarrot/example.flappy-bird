@@ -27,6 +27,7 @@ const neat = new Neat(5, 2, {
 ```
 #### Create Population Method
 ```javascript
+//Populate each bird with a random genome to jump
 function populating() {
  neat.population = neat.population.map(function(genome) { 
 // grab a random mutation method

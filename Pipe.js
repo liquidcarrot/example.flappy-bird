@@ -45,6 +45,12 @@ class Pipe {
     this.x -= this.speed;
   }
 
+  save(){
+    ctx.save(); 
+  }
+  rest(){
+    ctx.restore(); 
+  }
   // Has it moved offscreen?
   offscreen() {
     if (this.x < -this.w) {

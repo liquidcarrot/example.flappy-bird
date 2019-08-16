@@ -1,3 +1,4 @@
+
 let Bird = function(brain) {
   // position and size of bird
   this.x = 64;
@@ -26,7 +27,7 @@ let Bird = function(brain) {
 
   // This is the key function now that decides
   // if it should jump or not jump!
-  this.think = function(ipes) {
+  this.think = function(pipes) {
     // First find the closest pipe
     let closest = null;
     let record = Infinity;
@@ -53,10 +54,11 @@ let Bird = function(brain) {
       // bird's y velocity
       inputs[4] = map(this.velocity, -5, 5, 0, 1);
 
+      console.log('inputs: ' + inputs)
       // Get the outputs from the network
-      let action = this.brain.activate(inputs);
+     let action = this.brain.activate(inputs);
       // Decide to jump or not!
-      if (action[1] > action[0]) {
+     if (action[1] > action[0]) {
 
         this.up();
       }

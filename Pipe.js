@@ -4,21 +4,21 @@ class Pipe {
     // How big is the empty space
     let spacing = 150;
     // Where is th center of the empty space
-    let centery = random(spacing, height - spacing);
+    let centery = random(spacing, 512 - spacing);
 
-    //load the North and South pipes 
-    this.pipeN = new Image(); 
-    this.pipeS = new Image(); 
+    //load the North and South pipes
+    this.pipeN = new Image();
+    this.pipeS = new Image();
 
-    this.pipeN.src = "img/pipetop.png"; 
-    this.pipeS.src = "img/pipebottom.png"; 
+    this.pipeN.src = "img/pipetop.png";
+    this.pipeS.src = "img/pipebottom.png";
 
     // Top and bottom of pipe
     this.top = centery - spacing / 2;
-    this.bottom = height - (centery + spacing / 2);
+    this.bottom = 512 - (centery + spacing / 2);
     // Starts at the edge
-    this.x = width;
-    // Width of pipe
+    this.x = 450;
+    // width of pipe
     this.w = 80;
     // How fast
     this.speed = 6;
@@ -26,7 +26,7 @@ class Pipe {
 
   // Did this pipe hit a bird?
   hits(bird) {
-    if ((bird.y - bird.r) < this.top || (bird.y + bird.r) > (height - this.bottom)) {
+    if ((bird.y - bird.r) < this.top || (bird.y + bird.r) > (512 - this.bottom)) {
       if (bird.x > this.x && bird.x < this.x + this.w) {
         return true;
       }
@@ -36,8 +36,8 @@ class Pipe {
 
   // Draw the pipe
   show() {
-    ctx.drawImage(this.pipeN, this.x, 0, this.w, this.top); 
-    ctx.drawImage(this.pipeS, this.x, height - this.bottom, this.w, this.bottom); 
+    ctx.drawImage(this.pipeN, this.x, 0, this.w, this.top);
+    ctx.drawImage(this.pipeS, this.x, 512 - this.bottom, this.w, this.bottom);
   }
 
   // Update the pipe

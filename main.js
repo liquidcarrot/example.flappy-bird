@@ -4,14 +4,14 @@ var cvs = document.getElementById('canvas');
 var ctx = cvs.getContext('2d');
 
 var POP = 50;
-var GAMES = 70; 
-var mutation_rate = 1.5; 
-var mutation_amount = 8.5; 
+var GAMES = 70;
+var mutation_rate = 1.5;
+var mutation_amount = 8.5;
 var elitism = Math.round(0.2 * GAMES);
-var countGen = 0; 
+var countGen = 0;
 
 const neat = new Neat(5, 2, {
-  population: POP,
+  population_size: POP,
   elitism: elitism,
   mutation_rate: mutation_rate,
   mutation_amount: mutation_amount,
@@ -20,8 +20,8 @@ const neat = new Neat(5, 2, {
 
 // All active birds (not yet collided with pipe)
 let activeBirds = []
-// All birds for any given population
-let currentGeneration = [];
+// All dead birds in a population
+let dead = [];
 // Pipes
 let pipes = [];
 // A frame counter to determine when to add a pipe
@@ -39,7 +39,7 @@ let highScore = 0;
 // Training or just showing the current best
 let runBest = false;
 let runBestButton;
- 
+
 //Load the background image
  bg = new Image();
  bg.src = "img/background.png";
@@ -52,26 +52,20 @@ function setup() {
   // Access the interface elements
   speedSlider = select('#speedSlider');
   speedSpan = select('#speed');
-  
+
 }
 
 
 function populating() {
-  neat.population = neat.population.map(function(genome) { 
-    // grab a random mutation method
-    const random_mutation_method = methods.mutation.FFW[Math.floor(Math.random() * methods.mutation.FFW.length)]
-    // mutate the genome
-    genome.mutate(random_mutation_method)
-    // return the mutated genome
-    return genome
-  })
   for (let i = 0; i < neat.population.length; i++) {
     activeBirds.push(new Bird(neat.population[i]));
   }
   countGen++;
 }
 
-function draw() {
+populating()
+
+async function draw() {
   ctx.drawImage(bg, 0, 0, 450, 512);
 
   // Should we speed up cycles per frame
@@ -87,29 +81,31 @@ function draw() {
         pipes.splice(i, 1);
       }
     }
-      // Create a population
-      for (let i = activeBirds.length - 1; i >= 0; i--) {
+
+    for (let i = activeBirds.length - 1; i >= 0; i--) {
         let bird = activeBirds[i];
         // Bird uses its brain!
         bird.think(pipes);
         bird.update();
-                            
+
         // Check all the pipes
         for (let j = 0; j < pipes.length; j++) {
           // It's hit a pipe
           if (pipes[j].hits(activeBirds[i])) {
             // Remove this bird
-             activeBirds[i].brain.score = activeBirds[i].getScore();
-             currentGeneration.push(activeBirds.splice(i, 1).brain);
+            activeBirds[i].brain.score = activeBirds[i].getScore()
+            dead.push(activeBirds.splice(i, 1)[0].brain)
             break;
           }
         }
         if (bird.bottomTop()) {
-          activeBirds.splice(i, 1);
+          activeBirds[i].brain.score = activeBirds[i].getScore()
+          dead.push(activeBirds.splice(i, 1)[0].brain)
         }
       }
+
     // Add a new pipe every so often
-    if (counter % 75 == 0) {
+    if (counter % 40 == 0) {
       pipes.push(new Pipe());
     }
     counter++;
@@ -154,26 +150,26 @@ function draw() {
     }
     // If we're out of birds go to the next generation
     if (activeBirds.length == 0) {
-      neat.sort(); 
+      neat.population = dead
 
-      const newGeneration = [];
-    // gets the best of previous generation and inserts them into the next population
-    for (let i = 0; i < elitism; i++) {
-        newGeneration.push(neat.population[i]);
-    }
-    // test to see if parent gets returned
-    for (let i = 0; i < POP - elitism; i++) {
-      newGeneration.push(neat.getOffspring());
-    }
-     neat.population = newGeneration;
-     populating(); 
+      neat.population = await neat.evolve()
+
+      populating() // replace the activeBirds with the new population
+
+      // reset the dead
+      dead = []
+
+      // reset the pipes
+      pipes = []
+    //  pipes.push(new Pipe())
+      counter = 0
     }
   }
   this.ctx.fillStyle = "white";
 	this.ctx.font="20px Oswald, sans-serif";
-  
+
   this.ctx.fillText("Generation: " + countGen, 10,25)
   this.ctx.fillText("Population: " + activeBirds.length + "/" + POP, 10, 50 );
   this.ctx.fillText("High Score: " + highScore, 10, 75);
-  
+
 }

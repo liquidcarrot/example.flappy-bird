@@ -55,7 +55,7 @@ let Bird = function(brain) {
 
       // Get the outputs from the network
       let action = this.brain.activate(inputs);
-      console.log(action)
+
       // Decide to jump or not!
       if (action[1] > action[0]) {
         this.up();

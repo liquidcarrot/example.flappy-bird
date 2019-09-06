@@ -3,46 +3,93 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Flappy Bird Demo | carrot </title>
+  <link rel="shortcut icon" href="/liquid-carrot-favicon.png" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/ionicons/2.0.1/css/ionicons.min.css">
   <style>
-		.carrot
-		{
-			position: absolute;
-			top: 10px;
-			left: 60px;
-		}
-		.slider
-		{
+		.slider {
 			position: relative;
 			left: 0px;
 			bottom: -5px;
 		}
-    	.rightnum
-		{
+    .rightnum {
 			position: relative;
 			left: 0px;
 			bottom: 0px;
 		}
-
 	</style>
-	<title> Carrot NEAT Implementation on Flappy Bird </title>
-	<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<br/> <br/> <br/> <br/> <br/>
-	<img src="img/liquid.jpg" alt = "carrot logo" height = "70" width = "380" class = "carrot"/>
-	<canvas id="canvas" width="450" height="512" > </canvas>
-	<script src="https://liquidcarrot.io/carrot/cdn/0.3.10/carrot.js"></script>
-	<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
-	<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
-	<script language="javascript" type="text/javascript" src="bird.js"></script>
-  <script language="javascript" type="text/javascript" src="main.js"></script>
-	<script language="javascript" type="text/javascript" src="Pipe.js"></script>
+  <div class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#" style="padding:0">
+        <img src="img/carrot-logo.png" height="28">
+      </a>
 
-	<br/>
-	speed: <input id="speedSlider" class = "slider" type="range" min="1" max="10" value="1" >
-	<span id="speed"  class="rightnum">1</span>
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="https://liquidcarrot.io/">Home</a>
+        <a class="navbar-item" href="https://liquidcarrot.io/carrot">Docs</a>
+        <a class="navbar-item" href="https://github.com/liquidcarrot/example.flappy-bird/" target="_blank"><i class="ion-social-github" aria-hidden="true"></i></a>
+        <div class="navbar-item has-dropdown is-hoverable">
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="mailto:people@liquidcarrot.io?subject=Flappy%20Bird%20Demo">
+              Contact
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://github.com/liquidcarrot/example.flappy-bird/issues/new">
+              Report an issue
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <input type="text" id="nav-search" placeholder="Search" autofocus>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <canvas id="canvas" width="450" height="512" > </canvas>
+        <script src="https://liquidcarrot.io/carrot/cdn/0.3.10/carrot.js"></script>
+        <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+        <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
+        <script language="javascript" type="text/javascript" src="bird.js"></script>
+        <script language="javascript" type="text/javascript" src="main.js"></script>
+        <script language="javascript" type="text/javascript" src="Pipe.js"></script>
+
+        <br/>
+        speed: <input id="speedSlider" class = "slider" type="range" min="1" max="10" value="1" >
+        <span id="speed"  class="rightnum">1</span>
+      </div>
+    </div>
+  </section>
+
+
 
 </body>
-
 </html>

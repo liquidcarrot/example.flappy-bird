@@ -7,7 +7,7 @@ var POP = 50;
 var GAMES = 70;
 var mutation_rate = 1.5;
 var mutation_amount = 8.5;
-var elitism = Math.round(0.2 * GAMES);
+var elitism = 5;
 var countGen = 0;
 
 const neat = new Neat(5, 2, {
@@ -105,7 +105,7 @@ async function draw() {
       }
 
     // Add a new pipe every so often
-    if (counter % 40 == 0) {
+    if (counter % 75 == 0) {
       pipes.push(new Pipe());
     }
     counter++;

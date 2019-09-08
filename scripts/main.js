@@ -3,29 +3,33 @@ let { Neat, Network, architect, methods } = carrot;
 var cvs = document.getElementById('canvas');
 var ctx = cvs.getContext('2d');
 
-var POP = 50;
-var GAMES = 70;
-var mutation_rate = 1.5;
-var mutation_amount = 8.5;
-var elitism = 5;
-var countGen = 0;
+
+let bindings = {
+  // NEAT / population variables
+  population_size: 50,
+  mutation_rate: 0.5,
+  mutation_amount: 1,
+  elitism: 5,
+  // Game settings
+  pipe_spacing: 75, // How often to add a pipe to the game
+
+}
 
 const neat = new Neat(5, 2, {
-  population_size: POP,
-  elitism: elitism,
-  mutation_rate: mutation_rate,
-  mutation_amount: mutation_amount,
+  population_size: bindings.population_size,
+  elitism: bindings.elitism,
+  mutation_rate: bindings.mutation_rate,
+  mutation_amount: bindings.mutation_amount,
   equal: false
 })
 
-// All active birds (not yet collided with pipe)
-let activeBirds = []
-// All dead birds in a population
-let dead = [];
-// Pipes
-let pipes = [];
-// A frame counter to determine when to add a pipe
-let counter = 0;
+// Internal variables
+let countGen = 0;
+let activeBirds = [] // Birds not yet collided with pipe
+let dead = [] // All dead birds in a population
+
+let pipes = []
+let counter = 0 // A frame counter to determine when to add a pipe
 
 // Interface elements
 let speedSlider;
@@ -37,15 +41,15 @@ let allTimeHighScoreSpan;
 let highScore = 0;
 
 // Training or just showing the current best
-let runBest = false;
-let runBestButton;
+let runBest = false; // currently unused
+let runBestButton; // currently unused
 
 //Load the background image
  bg = new Image();
  bg.src = "img/background.png";
 
+// Create an environment for the background of the game
 function setup() {
-  //Create an environment for the background of the game
   let canvas = createCanvas(450, 512);
   canvas.parent('canvas');
 
@@ -105,7 +109,7 @@ async function draw() {
       }
 
     // Add a new pipe every so often
-    if (counter % 75 == 0) {
+    if (counter % bindings.pipe_spacing == 0) {
       pipes.push(new Pipe());
     }
     counter++;
@@ -169,7 +173,7 @@ async function draw() {
 	this.ctx.font="20px Oswald, sans-serif";
 
   this.ctx.fillText("Generation: " + countGen, 10,25)
-  this.ctx.fillText("Population: " + activeBirds.length + "/" + POP, 10, 50 );
+  this.ctx.fillText("Population: " + activeBirds.length + "/" + bindings.population_size, 10, 50 );
   this.ctx.fillText("High Score: " + highScore, 10, 75);
 
 }

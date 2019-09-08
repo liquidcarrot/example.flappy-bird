@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-slider/dist/css/bulma-slider.min.css"> -->
-  <link type="text/css" rel="stylesheet" href="styles/prettify.css">
   <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
@@ -84,34 +82,42 @@
             speed: <input id="speedSlider" class = "slider" type="range" min="1" max="10" value="1">
             <span id="speed"  class="rightnum">1</span>
           </div>
-          <div class="column">
+          <div id="app" class="column">
             <span>
               You're watching a series of neural networks learn how to play flappy-bird right on your computer. They've had zero configuration. In fact, they're designing themselves right now!
             </span>
             <br>
             <h2></h2>
-            <!-- <h2 class="has-text-weight-bold has-text-white">more controls - coming soon</h2> -->
             <div class="field">
               <label class="label has-text-white">Pipe spacing</label>
-              <input id="sliderWithValue" class="slider has-output is-success" min="0" max="100" value="50" step="1" type="range">
-              <output for="sliderWithValue">(coming soon)</output>
+              <input v-model="pipe_spacing" class="slider has-output is-success" min="45" max="90" step="1" type="range">
+              <output>{{ pipe_spacing }}</output>
             </div>
             <div class="field">
               <label class="label has-text-white">Elitism</label>
-              <input id="sliderWithValue" class="slider has-output is-success" min="0" max="100" value="50" step="1" type="range">
-              <output for="sliderWithValue">(coming soon)</output>
+              <input v-model="elitism" id="sliderWithValue1" class="slider has-output is-success" min="0" :max="population_size" value="50" step="1" type="range">
+              <output for="sliderWithValue1">(coming soon)</output>
+            </div>
+            <!-- <div class="field">
+              <label class="label has-text-white">Population size</label>
+              <input v-model="population_size" id="sliderWithValue2" class="slider has-output is-success" min="0" max="100" value="50" step="1" type="range">
+              <output for="sliderWithValue2">(coming soon)</output>
             </div>
             <div class="field">
-              <label class="label has-text-white">Population size</label>
-              <input id="sliderWithValue" class="slider has-output is-success" min="0" max="100" value="50" step="1" type="range">
-              <output for="sliderWithValue">(coming soon)</output>
+              <label class="label has-text-white">Chance of mutation</label>
+              <input v-model="mutation_rate" id="sliderWithValue2" class="slider has-output is-success" min="0" max="1" step=".1" type="range">
+              <output for="sliderWithValue2">(coming soon)</output>
             </div>
+            <div class="field">
+              <label class="label has-text-white">Times mutated</label>
+              <input v-model="mutation_amount" id="sliderWithValue2" class="slider has-output is-success" min="1" max="10" step="1" type="range">
+              <output for="sliderWithValue2">(coming soon)</output>
+            </div> -->
             <div class="field">
               <label class="label has-text-white">Save</label>
               <a class="button is-warning">Export best</a>
               <output for="sliderWithValue">(coming soon)</output>
             </div>
-
             <!-- <div class="dropdown">
               <div class="dropdown-trigger">
                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -138,8 +144,10 @@
   <script src="https://liquidcarrot.io/carrot/cdn/0.3.10/carrot.js"></script>
   <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
   <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
-  <script language="javascript" type="text/javascript" src="bird.js"></script>
-  <script language="javascript" type="text/javascript" src="main.js"></script>
-  <script language="javascript" type="text/javascript" src="Pipe.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/bird.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/main.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/Pipe.js"></script>
+  <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <script type="text/javascript" type="text/javascript" src="scripts/bindings.js"></script>
 </body>
 </html>

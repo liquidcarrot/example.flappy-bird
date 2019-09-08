@@ -2,9 +2,11 @@
 
 Using Machine Learning to play Flappy Bird, use NEAT algorithm from Carrot.js 
 
-**Click ([here]( https://akashsamlal.github.io/FlappyBird-NeuroEvolution/)) to play the Demo**
+A special thanks to [Akash Samlal](https://github.com/AkashSamlal) for kickstarting this project
 
-![flappyCap](https://user-images.githubusercontent.com/43329669/62561471-4a4c0780-b84d-11e9-946b-e81408d78fae.PNG)
+**Click ([here](https://liquidcarrot.io/example.flappy-bird/)) to play the Demo**
+
+![flappy bird playground](img/flappy-bird-playground.png)
 
 ## Incorporating Carrot.js 
 #### Initialize NEAT

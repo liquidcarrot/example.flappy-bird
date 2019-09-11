@@ -8,11 +8,10 @@ let bindings = {
   // NEAT / population variables
   population_size: 50,
   mutation_rate: 0.5,
-  mutation_amount: 1,
+  mutation_amount: 8,
   elitism: 5,
   // Game settings
   pipe_spacing: 75, // How often to add a pipe to the game
-
 }
 
 const neat = new Neat(5, 2, {
@@ -24,7 +23,6 @@ const neat = new Neat(5, 2, {
 })
 
 // Internal variables
-let countGen = 0;
 let activeBirds = [] // Birds not yet collided with pipe
 let dead = [] // All dead birds in a population
 
@@ -64,7 +62,6 @@ function populating() {
   for (let i = 0; i < neat.population.length; i++) {
     activeBirds.push(new Bird(neat.population[i]));
   }
-  countGen++;
 }
 
 populating()
@@ -172,7 +169,7 @@ async function draw() {
   this.ctx.fillStyle = "white";
 	this.ctx.font="20px Oswald, sans-serif";
 
-  this.ctx.fillText("Generation: " + countGen, 10,25)
+  this.ctx.fillText("Generation: " + neat.generation, 10,25)
   this.ctx.fillText("Population: " + activeBirds.length + "/" + bindings.population_size, 10, 50 );
   this.ctx.fillText("High Score: " + highScore, 10, 75);
 

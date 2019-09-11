@@ -69,7 +69,7 @@ let Bird = function(brain) {
   }
 
   this.bottomTop = function(){
-    // Bird dies when hits bottom?
+    // Bird dies when hits edges of screen
     return (this.y > 512 || this.y < 0);
   }
 
@@ -80,8 +80,10 @@ let Bird = function(brain) {
     // Every frame it is alive increases the score
     this.score++;
   }
-  this.getScore = function(){
-    return this.score;
+  this.getScore = function() {
+    // adjust score for network size
+    //return this.score / this.brain.nodes.length * this.brain.connections.length * (.00000000001 * neat.generation);
+    return this.score
   }
   return this;
 }

@@ -7,23 +7,30 @@
   <link rel="shortcut icon" href="img/favicon.png" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-slider/dist/css/bulma-slider.min.css"> -->
+  <link rel="stylesheet" href="https://wikiki.github.io/css/documentation.css?v=201904261505">
   <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
   <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/ionicons/2.0.1/css/ionicons.min.css">
   <style>
-		.slider {
-			position: relative;
-			left: 0px;
-			bottom: -5px;
-		}
-    .rightnum {
-			position: relative;
-			left: 0px;
-			bottom: 0px;
-		}
-	</style>
+    /* override bulma default paddings */
+    .game-slider {
+      max-width: 450px;
+      margin-top: 1rem;
+    }
+    input[type=range].slider {
+      margin: 0;
+    }
+    input[type=range].slider:not([orient="vertical"]).has-output+output {
+      top: .2rem;
+    }
+    .label:not(:last-child) {
+      margin: 0;
+    }
+    .banner-text {
+      font-family: 'Montserrat'
+    }
+  </style>
 </head>
 <body>
   <div class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -75,35 +82,36 @@
       <h1 class="title">
         flappy bird playground
       </h1>
-        <div class="columns">
+        <div  class="columns">
           <div class="column">
-            <canvas id="canvas" width="450" height="512" > </canvas>
-            <br>
-            speed: <input id="speedSlider" class = "slider" type="range" min="1" max="10" value="1">
-            <span id="speed"  class="rightnum">1</span>
+            <canvas id="canvas" width="450" height="512"> </canvas>
+            <div class="field game-slider">
+              <label class="label has-text-white">Speed</label>
+              <input id="speedSlider" class="slider has-output is-small" step="1" min="0" max="10" value="1" type="range">
+              <output id="speed" for="speedSlider">1</output>
+            </div>
           </div>
           <div id="app" class="column">
-            <span>
+            <span class="banner-text has-text-white">
               You're watching a series of neural networks learn how to play flappy-bird right on your computer. They've had zero configuration. In fact, they're designing themselves right now!
             </span>
-            <br>
-            <h2></h2>
-            <div class="field">
+            <div class="field game-slider">
               <label class="label has-text-white">Pipe spacing</label>
-              <input v-model="pipe_spacing" class="slider has-output is-success" min="45" max="90" step="1" type="range">
-              <output>{{ pipe_spacing }}</output>
+              <input id="sliderWithValue" v-model="pipe_spacing" class="slider has-output is-small" step="1" min="45" max="90" :value="pipe_spacing" type="range">
+              <output for="sliderWithValue">{{ pipe_spacing }}</output>
+              <output for="sliderWithValue">75</output>
             </div>
-            <div class="field">
+            <div class="field game-slider">
               <label class="label has-text-white">Elitism</label>
-              <input v-model="elitism" id="sliderWithValue1" class="slider has-output is-success" min="0" :max="population_size" value="50" step="1" type="range">
-              <output for="sliderWithValue1">(coming soon)</output>
+              <input v-model="elitism" id="sliderWithValue1" class="slider has-output is-small" min="0" :max="population_size" value="50" step="1" type="range">
+              <output for="sliderWithValue1">{{ elitism }}</output>
+            </div>
+            <div class="field game-slider">
+              <label class="label has-text-white">Population size</label>
+              <input v-model="population_size" id="sliderWithValue2" class="slider has-output is-small" min="0" max="100" step="1" type="range">
+              <output for="sliderWithValue2">{{ population_size }}</output>
             </div>
             <!-- <div class="field">
-              <label class="label has-text-white">Population size</label>
-              <input v-model="population_size" id="sliderWithValue2" class="slider has-output is-success" min="0" max="100" value="50" step="1" type="range">
-              <output for="sliderWithValue2">(coming soon)</output>
-            </div>
-            <div class="field">
               <label class="label has-text-white">Chance of mutation</label>
               <input v-model="mutation_rate" id="sliderWithValue2" class="slider has-output is-success" min="0" max="1" step=".1" type="range">
               <output for="sliderWithValue2">(coming soon)</output>
@@ -141,7 +149,7 @@
     </div>
   </section>
 
-  <script src="https://liquidcarrot.io/carrot/cdn/0.3.10/carrot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@liquid-carrot/carrot/dist/carrot.umd2.min.js"></script>
   <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
   <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
   <script language="javascript" type="text/javascript" src="scripts/bird.js"></script>

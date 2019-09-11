@@ -1,25 +1,21 @@
 class Pipe {
   constructor() {
 
-    // How big is the empty space
-    let spacing = 150;
-    // Where is th center of the empty space
-    let centery = random(spacing, 512 - spacing);
+    const clearing = 150 // How big is the empty space
+    let clearing_midpoint = random(clearing, 512 - clearing) // 512 is the height of the canvas, this should be dynamic
 
-    //load the North and South pipes
-    this.pipeN = new Image();
-    this.pipeS = new Image();
+    this.top_img = new Image() // Creates HTML image
+    this.top_img.src = "img/pipetop.png"
 
-    this.pipeN.src = "img/pipetop.png";
-    this.pipeS.src = "img/pipebottom.png";
+    this.bottom_img = new Image()
+    this.bottom_img.src = "img/pipebottom.png"
 
     // Top and bottom of pipe
-    this.top = centery - spacing / 2;
-    this.bottom = 512 - (centery + spacing / 2);
-    // Starts at the edge
-    this.x = 450;
-    // width of pipe
-    this.w = 80;
+    this.top = clearing_midpoint - clearing / 2
+    this.bottom = 512 - (clearing_midpoint + clearing / 2)
+
+    this.x = 450 // starts at the right edge of the screen
+    this.width = 80 // width of pipe
     // How fast
     this.speed = 6;
   }
@@ -27,7 +23,7 @@ class Pipe {
   // Did this pipe hit a bird?
   hits(bird) {
     if ((bird.y - bird.r) < this.top || (bird.y + bird.r) > (512 - this.bottom)) {
-      if (bird.x > this.x && bird.x < this.x + this.w) {
+      if (bird.x > this.x && bird.x < this.x + this.width) {
         return true;
       }
     }
@@ -36,8 +32,8 @@ class Pipe {
 
   // Draw the pipe
   show() {
-    ctx.drawImage(this.pipeN, this.x, 0, this.w, this.top);
-    ctx.drawImage(this.pipeS, this.x, 512 - this.bottom, this.w, this.bottom);
+    ctx.drawImage(this.top_img, this.x, 0, this.width, this.top); // Depends on ctx, which is declared outside this scope
+    ctx.drawImage(this.bottom_img, this.x, 512 - this.bottom, this.width, this.bottom);
   }
 
   // Update the pipe
@@ -47,10 +43,6 @@ class Pipe {
 
   // Has it moved offscreen?
   offscreen() {
-    if (this.x < -this.w) {
-      return true;
-    } else {
-      return false;
-    }
+    return (this.x < -this.width)
   }
 }

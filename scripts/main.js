@@ -99,10 +99,8 @@ async function draw() {
   for (let n = 0; n < cycles; n++) {
     // Show all the pipes
     for (let i = pipes.length - 1; i >= 0; i--) {
-      pipes[i].update();
-      if (pipes[i].offscreen()) {
-        pipes.splice(i, 1);
-      }
+      pipes[i].update()
+      if (pipes[i].offscreen()) pipes.splice(i, 1)
     }
 
     for (let i = activeBirds.length - 1; i >= 0; i--) {
@@ -121,7 +119,7 @@ async function draw() {
             break;
           }
         }
-        if (bird.bottomTop()) {
+        if (bird.offscreen()) {
           activeBirds[i].brain.score = activeBirds[i].getScore()
           dead.push(activeBirds.splice(i, 1)[0].brain)
         }
@@ -134,6 +132,7 @@ async function draw() {
     counter++;
   }
 
+  // Update best bird
   const best = max(activeBirds, "score")
   champion = (best.score > champion.score) ? best : champion
 

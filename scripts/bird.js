@@ -68,7 +68,7 @@ let Bird = function(brain) {
     this.velocity += this.lift;
   }
 
-  this.bottomTop = function(){
+  this.offscreen = function(){
     // Bird dies when hits edges of screen
     return (this.y > 512 || this.y < 0);
   }

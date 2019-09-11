@@ -1,8 +1,34 @@
 let { Neat, Network, architect, methods } = carrot;
 
+/* Utility functions */
+
+/**
+* Returns max
+*
+* @param {object[]} array An array of objects
+* @param {string} parameter A parameter to compare
+*
+* @returns {object} Object with max parameter value
+*/
+let max = function(array, parameter) {
+  let max = null
+
+  for (let i = 0; i < array.length; i++) {
+    const current  = array[i][parameter]
+
+    if (current > max) {
+      max = current
+      best = array[i]
+    }
+  }
+
+  return best
+}
+
+/* Declarations & Initializations */
+
 var cvs = document.getElementById('canvas');
 var ctx = cvs.getContext('2d');
-
 
 let bindings = {
   // NEAT / population variables
@@ -35,12 +61,8 @@ let speedSpan;
 let highScoreSpan;
 let allTimeHighScoreSpan;
 
-// All time high score
-let highScore = 0;
-
-// Training or just showing the current best
-let runBest = false; // currently unused
-let runBestButton; // currently unused
+// All time best bird
+let champion = { score: -Infinity }
 
 //Load the background image
  bg = new Image();
@@ -112,65 +134,37 @@ async function draw() {
     counter++;
   }
 
-  // What is highest score of the current population
-  let tempHighScore = 0;
-  // If we're training
-  if (!runBest) {
-    // Which is the best bird?
-    let tempBestBird = null;
-    for (let i = 0; i < activeBirds.length; i++) {
-      let s = activeBirds[i].score;
-      if (s > tempHighScore) {
-        tempHighScore = s;
-        tempBestBird = activeBirds[i];
-      }
-    }
+  const best = max(activeBirds, "score")
+  champion = (best.score > champion.score) ? best : champion
 
-    // Is it the all time high scorer?
-    if (tempHighScore > highScore) {
-      highScore = tempHighScore;
-      bestBird = tempBestBird;
-    }
-  } else {
-    // Just one bird, the best one so far
-    tempHighScore = bestBird.score;
-    if (tempHighScore > highScore) {
-      highScore = tempHighScore;
-    }
-  }
-  // Draw everything!
-  for (let i = 0; i < pipes.length; i++) {
-    pipes[i].show();
+  // Draw pipes
+  for (let i = 0; i < pipes.length; i++) pipes[i].show()
+
+  // Draw birds
+  for (let i = 0; i < activeBirds.length; i++) activeBirds[i].draw()
+
+  // If we're out of birds go to the next generation
+  if (activeBirds.length == 0) {
+
+    neat.population = dead
+
+    neat.population = await neat.evolve()
+
+    populating() // replace the activeBirds with the new population
+
+    // reset the dead
+    dead = []
+
+    // reset the pipes
+    pipes = []
+  //  pipes.push(new Pipe())
+    counter = 0
   }
 
-  if (runBest) {
-    bestBird.draw();
-  } else {
-    for (let i = 0; i < activeBirds.length; i++) {
-      activeBirds[i].draw();
-    }
-    // If we're out of birds go to the next generation
-    if (activeBirds.length == 0) {
-      neat.population = dead
-
-      neat.population = await neat.evolve()
-
-      populating() // replace the activeBirds with the new population
-
-      // reset the dead
-      dead = []
-
-      // reset the pipes
-      pipes = []
-    //  pipes.push(new Pipe())
-      counter = 0
-    }
-  }
   this.ctx.fillStyle = "white";
 	this.ctx.font="20px Oswald, sans-serif";
 
   this.ctx.fillText("Generation: " + neat.generation, 10,25)
   this.ctx.fillText("Population: " + activeBirds.length + "/" + bindings.population_size, 10, 50 );
-  this.ctx.fillText("High Score: " + highScore, 10, 75);
-
+  this.ctx.fillText("High Score: " + champion.score, 10, 75)
 }

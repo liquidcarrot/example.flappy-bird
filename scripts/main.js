@@ -97,29 +97,17 @@ async function draw() {
 
   // How many times to advance the game
   for (let n = 0; n < cycles; n++) {
-    
+
     pipes = pipes.filter(pipe => {
       pipe.reposition()
       return pipe.isVisible()
     })
 
     for (let i = activeBirds.length - 1; i >= 0; i--) {
-        let bird = activeBirds[i];
-        // Bird uses its brain!
-        bird.think(pipes);
-        bird.update();
+        activeBirds[i].think(pipes);
+        activeBirds[i].update();
 
-        // Check all the pipes
-        for (let j = 0; j < pipes.length; j++) {
-          // It's hit a pipe
-          if (pipes[j].hits(activeBirds[i])) {
-            // Remove this bird
-            activeBirds[i].brain.score = activeBirds[i].getScore()
-            dead.push(activeBirds.splice(i, 1)[0].brain)
-            break;
-          }
-        }
-        if (bird.offscreen()) {
+        if(pipes.length && (pipes[0].hits(activeBirds[i]) || activeBirds[i].offscreen())) {
           activeBirds[i].brain.score = activeBirds[i].getScore()
           dead.push(activeBirds.splice(i, 1)[0].brain)
         }

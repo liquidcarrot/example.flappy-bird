@@ -97,11 +97,11 @@ async function draw() {
 
   // How many times to advance the game
   for (let n = 0; n < cycles; n++) {
-    // Show all the pipes
-    for (let i = pipes.length - 1; i >= 0; i--) {
-      pipes[i].update()
-      if (pipes[i].offscreen()) pipes.splice(i, 1)
-    }
+    
+    pipes = pipes.filter(pipe => {
+      pipe.reposition()
+      return pipe.isVisible()
+    })
 
     for (let i = activeBirds.length - 1; i >= 0; i--) {
         let bird = activeBirds[i];

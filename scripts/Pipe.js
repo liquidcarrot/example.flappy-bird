@@ -37,12 +37,12 @@ class Pipe {
   }
 
   // Update the pipe
-  update() {
+  reposition() {
     this.x -= this.speed;
   }
 
   // Has it moved offscreen?
-  offscreen() {
-    return (this.x < -this.width)
+  isVisible() {
+    return (this.x > -this.width)
   }
 }

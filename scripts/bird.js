@@ -24,13 +24,16 @@ let Bird = function(brain) {
   this.act = function(pipes) {
     if(Array.isArray(pipes) && pipes.length) {
       const closest = pipes[0] // closest pipe is always first
-
+      const next = pipes[1] ? pipes[1] : { x: 0, top: 0, bottom: 0 }
       let inputs = []
       inputs[0] = map(closest.x, this.x, 450, 0, 1) // x position of closest pipe
       inputs[1] = map(closest.top, 0, 512, 0, 1) // top of closest pipe opening
       inputs[2] = map(closest.bottom, 0, 512, 0, 1) // bottom of closest pipe opening
-      inputs[3] = map(this.y, 0, 512, 0, 1) // bird's y position
-      inputs[4] = map(this.velocity, -5, 5, 0, 1) // bird's y velocity
+      inputs[3] = map(closest.x, this.x, 450, 0, 1) // x position of closest pipe
+      inputs[4] = map(closest.top, 0, 512, 0, 1) // top of closest pipe opening
+      inputs[5] = map(closest.bottom, 0, 512, 0, 1) // bottom of closest pipe opening
+      inputs[6] = map(this.y, 0, 512, 0, 1) // bird's y position
+      inputs[7] = map(this.velocity, -5, 5, 0, 1) // bird's y velocity
 
       let action = this.brain.activate(inputs) // Get the outputs from the network
       if (action[1] > action[0]) this.jump()

@@ -66,7 +66,7 @@ let champion = { score: -Infinity }
  bg = new Image();
  bg.src = "img/background.png";
 
-const neat = new Neat(5, 2, {
+const neat = new Neat(8, 2, {
   population_size: bindings.population_size,
   elitism: bindings.elitism,
   mutation_rate: bindings.mutation_rate,

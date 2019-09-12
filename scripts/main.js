@@ -30,6 +30,16 @@ let max = function(array, parameter) {
 var cvs = document.getElementById('canvas');
 var ctx = cvs.getContext('2d');
 
+// Create an environment for the background of the game
+function setup() {
+  let canvas = createCanvas(450, 512);
+  canvas.parent('canvas');
+
+  // Access the interface elements
+  speedSlider = select('#speedSlider');
+  speedSpan = select('#speed');
+}
+
 let bindings = {
   // NEAT / population variables
   population_size: 50,
@@ -40,26 +50,14 @@ let bindings = {
   pipe_spacing: 75, // How often to add a pipe to the game
 }
 
-const neat = new Neat(5, 2, {
-  population_size: bindings.population_size,
-  elitism: bindings.elitism,
-  mutation_rate: bindings.mutation_rate,
-  mutation_amount: bindings.mutation_amount,
-  equal: false
-})
-
 // Internal variables
-let activeBirds = [] // Birds not yet collided with pipe
 let dead = [] // All dead birds in a population
-
 let pipes = []
 let counter = 0 // A frame counter to determine when to add a pipe
 
 // Interface elements
-let speedSlider;
-let speedSpan;
-let highScoreSpan;
-let allTimeHighScoreSpan;
+let speedSlider
+let speedSpan
 
 // All time best bird
 let champion = { score: -Infinity }
@@ -68,25 +66,19 @@ let champion = { score: -Infinity }
  bg = new Image();
  bg.src = "img/background.png";
 
-// Create an environment for the background of the game
-function setup() {
-  let canvas = createCanvas(450, 512);
-  canvas.parent('canvas');
+const neat = new Neat(5, 2, {
+  population_size: bindings.population_size,
+  elitism: bindings.elitism,
+  mutation_rate: bindings.mutation_rate,
+  mutation_amount: bindings.mutation_amount,
+  equal: false
+})
 
-  // Access the interface elements
-  speedSlider = select('#speedSlider');
-  speedSpan = select('#speed');
-
+function populate(population) {
+  return population.map(brain => new Bird(brain))
 }
 
-
-function populating() {
-  for (let i = 0; i < neat.population.length; i++) {
-    activeBirds.push(new Bird(neat.population[i]));
-  }
-}
-
-populating()
+let activeBirds = populate(neat.population)
 
 async function draw() {
   ctx.drawImage(bg, 0, 0, 450, 512);
@@ -96,27 +88,26 @@ async function draw() {
   speedSpan.html(cycles);
 
   // How many times to advance the game
-  for (let n = 0; n < cycles; n++) {
-
+  for (let n = 0; n < cycles && activeBirds && activeBirds.length; n++) {
     pipes = pipes.filter(pipe => {
       pipe.reposition()
       return pipe.isVisible()
     })
 
-    for (let i = activeBirds.length - 1; i >= 0; i--) {
-        activeBirds[i].think(pipes);
-        activeBirds[i].update();
+    activeBirds = activeBirds.filter(bird => {
+      bird.act(pipes)
+      bird.update()
 
-        if(pipes.length && (pipes[0].hits(activeBirds[i]) || activeBirds[i].offscreen())) {
-          activeBirds[i].brain.score = activeBirds[i].getScore()
-          dead.push(activeBirds.splice(i, 1)[0].brain)
-        }
+      if(pipes.length && (pipes[0].hits(bird) || bird.offscreen())) {
+        dead.push(bird.die())
+        return false
       }
 
+      return true
+    })
+
     // Add a new pipe every so often
-    if (counter % bindings.pipe_spacing == 0) {
-      pipes.push(new Pipe());
-    }
+    if (counter % bindings.pipe_spacing == 0) pipes.push(new Pipe())
     counter++;
   }
 
@@ -134,17 +125,11 @@ async function draw() {
   if (activeBirds.length == 0) {
 
     neat.population = dead
+    activeBirds = populate(await neat.evolve())
 
-    neat.population = await neat.evolve()
-
-    populating() // replace the activeBirds with the new population
-
-    // reset the dead
+    // reset
     dead = []
-
-    // reset the pipes
     pipes = []
-  //  pipes.push(new Pipe())
     counter = 0
   }
 

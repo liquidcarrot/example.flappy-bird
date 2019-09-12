@@ -30,9 +30,9 @@ let Bird = function(brain) {
       inputs[0] = map(closest.x, this.x, 450, 0, 1) // x position of closest pipe
       inputs[1] = map(closest.top, 0, 512, 0, 1) // top of closest pipe opening
       inputs[2] = map(closest.bottom, 0, 512, 0, 1) // bottom of closest pipe opening
-      inputs[3] = map(closest.x, this.x, 450, 0, 1) // x position of closest pipe
-      inputs[4] = map(closest.top, 0, 512, 0, 1) // top of closest pipe opening
-      inputs[5] = map(closest.bottom, 0, 512, 0, 1) // bottom of closest pipe opening
+      inputs[3] = map(next.x, this.x, 450, 0, 1) // x position of next pipe
+      inputs[4] = map(next.top, 0, 512, 0, 1) // top of next pipe opening
+      inputs[5] = map(next.bottom, 0, 512, 0, 1) // bottom of next pipe opening
       inputs[6] = map(this.y, 0, 512, 0, 1) // bird's y position
       inputs[7] = map(this.velocity, -5, 5, 0, 1) // bird's y velocity
     }

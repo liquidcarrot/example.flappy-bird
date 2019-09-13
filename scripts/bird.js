@@ -1,12 +1,13 @@
 let Bird = function(brain) {
   // position and size of bird
-  this.x = 64;
-  this.y = 512 / 2;
-  this.r = 12;
+  this.x = 64
+  this.y = 512 / 2
+  this.r = 12
 
-  this.brain = brain;
-  this.birdImage = new Image();
-  this.birdImage.src = "img/bird.png";
+  this.brain = brain
+  this.brain.score = 0
+  this.birdImage = new Image()
+  this.birdImage.src = "img/bird.png"
 
   // Physics
   this.gravity = 0.8
@@ -15,9 +16,7 @@ let Bird = function(brain) {
 
   this.score = 0 // Score is how many frames it's been alive
 
-  this.draw = function(){
-    ctx.drawImage(this.birdImage,  this.x, this.y, this.r * 2, this.r * 2);
-   }
+  this.draw = () => ctx.drawImage(this.birdImage,  this.x, this.y, this.r * 2, this.r * 2)
 
   // This is the key function now that decides
   // if it should jump or not jump!
@@ -48,16 +47,13 @@ let Bird = function(brain) {
 
   // Update bird's position based on velocity, gravity, etc.
   this.update = function(){
-    this.velocity += this.gravity;
-    this.y += this.velocity;
+    this.velocity += this.gravity
+    this.y += this.velocity
 
-    this.score++ // every frame it's alive increase its score
+    this.brain.score++ // increase brain's score for each frame
   }
 
-  this.die = function() {
-    //this.score / this.brain.nodes.length * this.brain.connections.length * (.00000000001 * neat.generation);
-    this.brain.score = this.score
-    return this.brain
-  }
+  // this.score / this.brain.nodes.length * this.brain.connections.length * (.00000000001 * neat.generation);
+
   return this;
 }

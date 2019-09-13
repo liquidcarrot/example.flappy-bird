@@ -14,7 +14,7 @@ let max = function(array, parameter) {
   let max = null
 
   for (let i = 0; i < array.length; i++) {
-    const current  = array[i][parameter]
+    const current  = array[i].brain[parameter] // structural assumption with .brain
 
     if (current > max) {
       max = current
@@ -74,9 +74,7 @@ const neat = new Neat(8, 2, {
   equal: false
 })
 
-function populate(population) {
-  return population.map(brain => new Bird(brain))
-}
+const populate = population => population.map(brain => new Bird(brain))
 
 let activeBirds = populate(neat.population)
 
@@ -99,7 +97,7 @@ async function draw() {
       bird.update()
 
       if(pipes.length && (pipes[0].hits(bird) || bird.offscreen())) {
-        dead.push(bird.die())
+        dead.push(bird.brain)
         return false
       }
 
@@ -138,5 +136,5 @@ async function draw() {
 
   this.ctx.fillText("Generation: " + neat.generation, 10,25)
   this.ctx.fillText("Population: " + activeBirds.length + "/" + bindings.population_size, 10, 50 );
-  this.ctx.fillText("High Score: " + champion.score, 10, 75)
+  this.ctx.fillText("High Score: " + champion.brain.score, 10, 75)
 }

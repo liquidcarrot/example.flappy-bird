@@ -60,7 +60,7 @@ let speedSlider
 let speedSpan
 
 // All time best bird
-let champion = { score: -Infinity }
+let champion = { brain: { score: -Infinity } }
 
 //Load the background image
  bg = new Image();
@@ -111,7 +111,7 @@ async function draw() {
 
   // Update best bird
   const best = max(activeBirds, "score")
-  champion = (best.score > champion.score) ? best : champion
+  champion = (best.brain.score > champion.brain.score) ? best : champion
 
   // Draw pipes
   for (let i = 0; i < pipes.length; i++) pipes[i].show()

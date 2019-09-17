@@ -123,11 +123,13 @@ async function draw() {
   if (activeBirds.length == 0) {
 
     neat.population = dead
-    neat.population = neat.resize(bindings.population_size) // resize before evolve
-    neat.population = neat.population.map(function(genome) { // add scores for the new population members
-      genome.score = (genome.score) ? genome.score : 0
-      return genome
-    })
+    // Check for population resize
+    if(bindings.population_size !== neat.population.length) {
+      neat.population = neat.resize(bindings.population_size).map(function(genome) {
+        genome.score = (genome.score) ? genome.score : 0 // add scores for the new population members
+        return genome
+      })
+    }
     neat.elitism = Number(bindings.elitism) // Avoid implicit type coercion, adjust elitism before evolve
     activeBirds = populate(await neat.evolve())
 

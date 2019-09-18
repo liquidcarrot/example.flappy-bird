@@ -27,8 +27,16 @@ let max = function(array, parameter) {
 
 /* Declarations & Initializations */
 
-var cvs = document.getElementById('canvas');
-var ctx = cvs.getContext('2d');
+// Drawing elements
+var cvs = document.getElementById('canvas')
+var ctx = cvs.getContext('2d')
+
+bg = new Image()
+bg.src = "img/background.png"
+
+// Interface elements
+let speedSlider
+let speedSpan
 
 // Create an environment for the background of the game
 function setup() {
@@ -40,6 +48,7 @@ function setup() {
   speedSpan = select('#speed');
 }
 
+// Vue bindings
 let bindings = {
   // NEAT / population variables
   population_size: 50,
@@ -48,6 +57,8 @@ let bindings = {
   elitism: 5,
   // Game settings
   pipe_spacing: 75, // How often to add a pipe to the game
+  // Statistics & visualizations
+  average: 0
 }
 
 // Internal variables
@@ -55,16 +66,9 @@ let dead = [] // All dead birds in a population
 let pipes = []
 let counter = 0 // A frame counter to determine when to add a pipe
 
-// Interface elements
-let speedSlider
-let speedSpan
-
-// All time best bird
-let champion = { brain: { score: -Infinity } }
-
-//Load the background image
- bg = new Image();
- bg.src = "img/background.png";
+// Performance & Statistics
+let champion = { brain: { score: -Infinity } } // All time best bird
+const scoreHistory = [] // Per generation history of total & average score
 
 const neat = new Neat(8, 2, {
   population_size: bindings.population_size,
@@ -73,6 +77,8 @@ const neat = new Neat(8, 2, {
   mutation_amount: bindings.mutation_amount,
   equal: false
 })
+
+neat.generation = 1
 
 const populate = population => population.map(brain => new Bird(brain))
 
@@ -121,6 +127,12 @@ async function draw() {
 
   // If we're out of birds go to the next generation
   if (activeBirds.length == 0) {
+    // Calculate generation performance
+    const total = neat.population.reduce((sum, brain) => sum + brain.score, 0)
+    const average = total / neat.population.length
+    scoreHistory.push({ generation: neat.generation, average, total })
+
+    bindings.average = average
 
     neat.population = dead
     // Check for population resize

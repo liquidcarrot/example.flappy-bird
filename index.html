@@ -45,8 +45,11 @@
       margin: 0;
     }
     .banner-text {
-      font-family: 'Montserrat'
+      font-family: 'Montserrat';
+      line-height: 2.5em;
     }
+    /* custom bulma-like styles */
+    .has-background-transparent { background: transparent !important; }
   </style>
 </head>
 <body>
@@ -101,7 +104,7 @@
       </h1>
         <div class="columns">
           <div class="column">
-            <canvas id="canvas" width="450" height="512"> </canvas>
+            <canvas id="canvas" width="450" height="512"></canvas>
             <div class="field game-slider">
               <label class="label has-text-white">Speed</label>
               <input id="speedSlider" class="slider has-output is-small" step="1" min="0" max="10" value="1" type="range">
@@ -110,7 +113,16 @@
           </div>
           <div id="app" class="column">
             <span class="banner-text has-text-white">
-              You're watching a series of neural networks learn how to play flappy-bird right on your computer. They've had zero configuration. In fact, they're designing themselves right now!
+              You're watching <span class="has-text-primary">{{ population_size }}</span> neural networks design themselves to play flappy-bird right on your computer.
+              They started as
+              <div class="select is-rounded is-primary" style="padding:0 5px">
+                <select class="has-background-transparent has-text-white">
+                  <option class="has-text-dark">input & output networks</option>
+                  <option class="has-text-dark">perceptron (coming soon)</option>
+                  <option class="has-text-dark">default GRU (coming soon)</option>
+                  <option class="has-text-dark">default LSTM (coming soon)</option>
+                </select>
+              </div> but with each game they change (evolve) to become better players. 
             </span>
             <div class="field game-slider">
               <label class="label has-text-white">Pipe spacing</label>

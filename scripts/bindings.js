@@ -16,5 +16,16 @@
 
  let app = new Vue({
    el: '#app',
-   data: bindings
+   data: bindings,
+   methods: {
+     save: async function(brain) {
+       localStorage.setItem("flappy_bird_champion", JSON.stringify(brain.toJSON()))
+     },
+     restore: async function () {
+       const template = Network.fromJSON(JSON.parse(localStorage.getItem("flappy_bird_champion")))
+       const population = []
+       for(let i = 0; i < this.population_size; i++) population.push(template.clone())
+       this.activeBirds = populate(population)
+     }
+   }
  })

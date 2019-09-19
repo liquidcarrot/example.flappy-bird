@@ -122,7 +122,7 @@
                   <option class="has-text-dark">default GRU (coming soon)</option>
                   <option class="has-text-dark">default LSTM (coming soon)</option>
                 </select>
-              </div> but with each game they change (evolve) to become better players. 
+              </div> but with each game they change (evolve) to become better players.
             </span>
             <div class="field game-slider">
               <label class="label has-text-white">Pipe spacing</label>
@@ -149,29 +149,10 @@
               <input v-model="mutation_amount" id="sliderWithValue2" class="slider has-output is-success" min="1" max="10" step="1" type="range">
               <output for="sliderWithValue2">(coming soon)</output>
             </div> -->
-            <div class="field">
-              <label class="label has-text-white">Save</label>
-              <a class="button is-warning">Export best</a>
-              <output for="sliderWithValue">(coming soon)</output>
-            </div>
-            <!-- <div class="dropdown">
-              <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                  <span>Data available</span>
-                  <span class="icon is-small">
-                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                  </span>
-                </button>
-              </div>
-              <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                  <a class="dropdown-item">Pipe tops (nearest pipe)</a>
-                  <a class="dropdown-item">Pipe tops, edges (nearest pipe)</a>
-                  <a class="dropdown-item">Pipe tops (all pipes)</a>
-                  <a class="dropdown-item">Pipe tops, edges (all pipes)</a>
-                </div>
-              </div>
-            </div> -->
+          <div class="field">
+            <label class="label has-text-white">Save & Restore</label>
+            <a style="margin:12px 8px 0 0;"@click="save(champion.brain)" class="button is-warning is-rounded">Export best</a>
+            <a style="margin:12px 8px 0 0;"@click="restore()" class="button is-warning is-rounded">Restore best</a>
           </div>
         </div>
     </div>

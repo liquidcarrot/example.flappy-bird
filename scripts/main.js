@@ -52,8 +52,8 @@ function setup() {
 let bindings = {
   // NEAT / population variables
   population_size: 50,
-  mutation_rate: 0.5,
-  mutation_amount: 8,
+  mutation_rate: 0.9,
+  mutation_amount: 2,
   elitism: 5,
   // Game settings
   pipe_spacing: 75, // How often to add a pipe to the game
@@ -70,11 +70,12 @@ let counter = 0 // A frame counter to determine when to add a pipe
 let champion = { brain: { score: -Infinity } } // All time best bird
 const scoreHistory = [] // Per generation history of total & average score
 
-const neat = new Neat(8, 2, {
+const neat = new Neat(5, 2, {
   population_size: bindings.population_size,
   elitism: bindings.elitism,
   mutation_rate: bindings.mutation_rate,
   mutation_amount: bindings.mutation_amount,
+  mutation: methods.mutation.FFW,
   equal: false
 })
 

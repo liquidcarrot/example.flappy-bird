@@ -25,7 +25,7 @@
        const template = Network.fromJSON(JSON.parse(localStorage.getItem("flappy_bird_champion")))
        const population = []
        for(let i = 0; i < this.population_size; i++) population.push(template.clone())
-       this.activeBirds = populate(population)
+       activeBirds = populate(population) // assumes activeBirds is in scope
      }
    }
  })

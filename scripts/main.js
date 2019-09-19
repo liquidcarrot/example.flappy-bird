@@ -52,7 +52,6 @@ function setup() {
 let bindings = {
   // NEAT / population variables
   population_size: 50,
-  activeBirds: [],
   mutation_rate: 0.9,
   mutation_amount: 2,
   elitism: 5,
@@ -84,7 +83,7 @@ neat.generation = 1
 
 const populate = population => population.map(brain => new Bird(brain))
 
-bindings.activeBirds = populate(neat.population)
+let activeBirds = populate(neat.population)
 
 async function draw() {
   ctx.drawImage(bg, 0, 0, 450, 512);
@@ -94,13 +93,13 @@ async function draw() {
   speedSpan.html(cycles);
 
   // How many times to advance the game
-  for (let n = 0; n < cycles && bindings.activeBirds && bindings.activeBirds.length; n++) {
+  for (let n = 0; n < cycles && activeBirds && activeBirds.length; n++) {
     pipes = pipes.filter(pipe => {
       pipe.reposition()
       return pipe.isVisible()
     })
 
-    bindings.activeBirds = bindings.activeBirds.filter(bird => {
+    activeBirds = activeBirds.filter(bird => {
       bird.act(pipes)
       bird.update()
 
@@ -118,17 +117,17 @@ async function draw() {
   }
 
   // Update best bird
-  const best = max(bindings.activeBirds, "score")
+  const best = max(activeBirds, "score")
   bindings.champion = (best.brain.score > bindings.champion.brain.score) ? best : bindings.champion
 
   // Draw pipes
   for (let i = 0; i < pipes.length; i++) pipes[i].show()
 
   // Draw birds
-  for (let i = 0; i < bindings.activeBirds.length; i++) bindings.activeBirds[i].draw()
+  for (let i = 0; i < activeBirds.length; i++) activeBirds[i].draw()
 
   // If we're out of birds go to the next generation
-  if (bindings.activeBirds.length == 0) {
+  if (activeBirds.length == 0) {
     // Calculate generation performance
     const total = neat.population.reduce((sum, brain) => sum + brain.score, 0)
     const average = total / neat.population.length
@@ -145,7 +144,7 @@ async function draw() {
       })
     }
     neat.elitism = Number(bindings.elitism) // Avoid implicit type coercion, adjust elitism before evolve
-    bindings.activeBirds = populate(await neat.evolve())
+    activeBirds = populate(await neat.evolve())
 
     // reset
     dead = []
@@ -157,6 +156,6 @@ async function draw() {
 	this.ctx.font="20px Oswald, sans-serif";
 
   this.ctx.fillText("Generation: " + neat.generation, 10,25)
-  this.ctx.fillText("Population: " + bindings.activeBirds.length + "/" + bindings.population_size, 10, 50 );
+  this.ctx.fillText("Population: " + activeBirds.length + "/" + bindings.population_size, 10, 50 );
   this.ctx.fillText("High Score: " + bindings.champion.brain.score, 10, 75)
 }

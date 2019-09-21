@@ -56,10 +56,6 @@
   </style>
   <style>
     /* custom styles */
-    .visualization {
-      width: 10vw;
-      height: 10vw;
-    }
   </style>
 </head>
 <body>
@@ -161,15 +157,18 @@
             </div> -->
           <div class="field">
             <label class="label has-text-white">Save & Restore</label>
-            <a style="margin:12px 8px 0 0;"@click="save(champion.brain)" class="button is-warning is-rounded">Export best</a>
-            <a style="margin:12px 8px 0 0;"@click="restore()" class="button is-warning is-rounded">Restore best</a>
+            <a style="margin:12px 8px 0 0;"@click="save(champion.brain)" class="button is-warning">Export</a>
+            <a style="margin:12px 8px 0 0;"@click="restore()" class="button is-warning">Restore</a>
           </div>
           <div class="field">
-            <label class="label has-text-white">Visualize Best</label>
+            <label class="label has-text-white">Visualize</label>
             <a style="margin:12px 8px 0 0;"@click="graph(champion.brain)" class="button is-warning is-rounded">Create visualization</a>
           </div>
-          <div class="section">
-            <div class="visualization" ref="visualization"></div>
+          <div class="columns">
+            <div class="column is-half">
+              <div class="visualization" ref="visualization"></div>
+            </div>
+            <div class="column"></div>
           </div>
         </div>
     </div>

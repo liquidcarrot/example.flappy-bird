@@ -42,7 +42,7 @@
        // connections by default
        const options = {
          autoResize: true,
-         height:'100%',
+         height:'250px',
          width:'100%',
          edges: {
            smooth: {

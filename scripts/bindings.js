@@ -45,6 +45,9 @@
          height:'250px',
          width:'100%',
          edges: {
+           arrows: {
+              to: {enabled: true, scaleFactor:1, type:'arrow'}
+            },
            smooth: {
              type: "cubicBezier",
              forceDirection: "horizontal"

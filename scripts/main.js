@@ -118,7 +118,10 @@ async function draw() {
 
   // Update best bird
   const best = max(activeBirds, "score")
-  bindings.champion = (best.brain.score > bindings.champion.brain.score) ? best : bindings.champion
+  if(best.brain.score > bindings.champion.brain.score) {
+    bindings.champion = best
+    
+  }
 
   // Draw pipes
   for (let i = 0; i < pipes.length; i++) pipes[i].show()

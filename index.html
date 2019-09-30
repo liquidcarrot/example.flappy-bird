@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title> Flappy Bird Demo | carrot </title>
   <link rel="shortcut icon" href="img/favicon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
-  <link rel="stylesheet" href="https://wikiki.github.io/css/documentation.css?v=201904261505">
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <link type="text/css" rel="stylesheet" href="https://wikiki.github.io/css/documentation.css?v=201904261505">
   <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@6.0.0/dist/vis-network.min.css">
   <style>
   @font-face { font-family: "Ionicons"; src: url("https://cdn.jsdelivr.net/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.1"); src: url("https://cdn.jsdelivr.net/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"), url("https://cdn.jsdelivr.net/ionicons/2.0.1/fonts/ionicons.ttf?v=2.0.1") format("truetype"), url("https://cdn.jsdelivr.net/ionicons/2.0.1/fonts/ionicons.woff?v=2.0.1") format("woff"), url("https://cdn.jsdelivr.net/ionicons/2.0.1/fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg"); font-weight: normal; font-style: normal; }
 
@@ -30,9 +31,11 @@
   .ion-social-github:before { content: "\f233"; }
   </style>
   <style>
-    /* override bulma default paddings */
+    /* override bulma defaults */
     .game-slider {
       max-width: 450px;
+    }
+    .field {
       margin-top: 1rem;
     }
     input[type=range].slider {
@@ -50,6 +53,9 @@
     }
     /* custom bulma-like styles */
     .has-background-transparent { background: transparent !important; }
+  </style>
+  <style>
+    /* custom styles */
   </style>
 </head>
 <body>
@@ -151,20 +157,32 @@
             </div> -->
           <div class="field">
             <label class="label has-text-white">Save & Restore</label>
-            <a style="margin:12px 8px 0 0;"@click="save(champion.brain)" class="button is-warning is-rounded">Export best</a>
-            <a style="margin:12px 8px 0 0;"@click="restore()" class="button is-warning is-rounded">Restore best</a>
+            <a style="margin:12px 8px 0 0;"@click="save(champion.brain)" class="button is-warning">Export</a>
+            <a style="margin:12px 8px 0 0;"@click="restore()" class="button is-warning">Restore</a>
+          </div>
+          <div class="field">
+            <label class="label has-text-white">Visualize</label>
+            <a style="margin:12px 8px 0 0;"@click="graph(champion.brain)" class="button is-warning is-rounded">Create visualization</a>
+          </div>
+          <div class="columns">
+            <div class="column is-half">
+              <div class="visualization" ref="visualization"></div>
+            </div>
+            <div class="column"></div>
           </div>
         </div>
     </div>
   </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/@liquid-carrot/carrot/dist/carrot.umd2.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@liquid-carrot/carrot/dist/carrot.umd2.min.js"></script> -->
+  <script language="javascript" type="text/javascript" src="scripts/carrot.js"></script>
   <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
   <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
   <script language="javascript" type="text/javascript" src="scripts/bird.js"></script>
   <script language="javascript" type="text/javascript" src="scripts/main.js"></script>
   <script language="javascript" type="text/javascript" src="scripts/Pipe.js"></script>
   <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-  <script type="text/javascript" type="text/javascript" src="scripts/bindings.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/bindings.js"></script>
+  <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@6.0.0/dist/vis-network.min.js"></script>
 </body>
 </html>

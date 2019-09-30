@@ -31,11 +31,23 @@
        const element = this.$refs.visualization
        const { nodes: neurons, connections } = brain.toJSON()
 
-       // Flattens neuron layers from `Network.toJSON` and converts it to `vie-network`
-       const nodes = new vis.DataSet(neurons.map(neuron => ({ id: neuron.index, color: "yellow" })))
+       // Flattens neuron layers from `Network.toJSON` and converts it to 'vis-network'
+       const nodes = new vis.DataSet(neurons.map((neuron, i) => ({
+           id: neuron.index,
+           title: neuron.type,
+           label: i,
+           color: (neuron.type === "hidden") ? "orange" : (neuron.type === "output") ? "blue" : "yellow"
+         })
+       ))
 
        // Flattens connections from `Network.toJSON` and converts it into `vis-network`
-       const edges = new vis.DataSet(connections.map(connection => ({ from: connection.from, to: connection.to })))
+       const edges = new vis.DataSet(connections.map(connection => ({
+         from: connection.from,
+         to: connection.to,
+         title: connection.weight,
+         color: (connection.weight == 1) ? "white" : (connection.weight > 0) ? "green" : "red"
+       })
+     ))
 
        // Vis.js Network Options
        // Will have a "left-to-right" graph with "smooth" lines representing

@@ -120,7 +120,7 @@ async function draw() {
   const best = max(activeBirds, "score")
   if(best.brain.score > bindings.champion.brain.score) {
     bindings.champion = best
-    
+    console.log(bindings.champion.brain.activate([Math.random(), Math.random(), Math.random(), Math.random(), Math.random()]))
   }
 
   // Draw pipes

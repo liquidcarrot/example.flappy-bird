@@ -34,7 +34,7 @@
        // Flattens neuron layers from `Network.toJSON` and converts it to 'vis-network'
        const nodes = new vis.DataSet(neurons.map((neuron, i) => ({
            id: neuron.index,
-           title: neuron.type,
+           title: i,
            label: i,
            color: (neuron.type === "hidden") ? "orange" : (neuron.type === "output") ? "blue" : "yellow"
          })

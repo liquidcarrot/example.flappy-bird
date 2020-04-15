@@ -10,20 +10,6 @@ let { Neat, Network, architect, methods } = carrot;
 *
 * @returns {object} Object with max parameter value
 */
-let max = function(array, parameter) {
-  let max = null
-
-  for (let i = 0; i < array.length; i++) {
-    const current  = array[i].brain[parameter] // structural assumption with .brain
-
-    if (current > max) {
-      max = current
-      best = array[i]
-    }
-  }
-
-  return best
-}
 
 /* Declarations & Initializations */
 
@@ -58,7 +44,7 @@ let bindings = {
   // Game settings
   pipe_spacing: 75, // How often to add a pipe to the game
   // Statistics & visualizations
-  champion: { brain: { score: -Infinity } }, // All time best bird
+  champion: { score: -Infinity } , // All time best bird
   average: 0
 }
 
@@ -76,7 +62,6 @@ const neat = new Neat(5, 2, {
   mutation_rate: bindings.mutation_rate,
   mutation_amount: bindings.mutation_amount,
   mutation: methods.mutation.FFW,
-  equal: false
 })
 
 neat.generation = 1
@@ -117,10 +102,10 @@ async function draw() {
   }
 
   // Update best bird
-  const best = max(activeBirds, "score")
-  if(best.brain.score > bindings.champion.brain.score) {
+  const best = neat.getFittest()
+  if(best.score > bindings.champion.score) {
     bindings.champion = best
-    console.log(bindings.champion.brain.activate([Math.random(), Math.random(), Math.random(), Math.random(), Math.random()]))
+    console.log(bindings.champion.activate([Math.random(), Math.random(), Math.random(), Math.random(), Math.random()]))
   }
 
   // Draw pipes
@@ -133,20 +118,11 @@ async function draw() {
   if (activeBirds.length == 0) {
     // Calculate generation performance
     const total = neat.population.reduce((sum, brain) => sum + brain.score, 0)
-    const average = total / neat.population.length
+    const average = neat.getAverage()
     scoreHistory.push({ generation: neat.generation, average, total })
 
     bindings.average = average
 
-    neat.population = dead
-    // Check for population resize
-    if(bindings.population_size !== neat.population.length) {
-      neat.population = neat.resize(bindings.population_size).map(function(genome) {
-        genome.score = (genome.score) ? genome.score : 0 // add scores for the new population members
-        return genome
-      })
-    }
-    neat.elitism = Number(bindings.elitism) // Avoid implicit type coercion, adjust elitism before evolve
     activeBirds = populate(await neat.evolve())
 
     // reset
@@ -160,5 +136,5 @@ async function draw() {
 
   this.ctx.fillText("Generation: " + neat.generation, 10,25)
   this.ctx.fillText("Population: " + activeBirds.length + "/" + bindings.population_size, 10, 50 );
-  this.ctx.fillText("High Score: " + bindings.champion.brain.score, 10, 75)
+  this.ctx.fillText("High Score: " + bindings.champion.score, 10, 75)
 }
